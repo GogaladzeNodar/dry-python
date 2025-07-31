@@ -10,7 +10,7 @@ dependencies = [
     "psycopg2-binary",        
     "pymongo",                
     "fastapi",
-    "uvicorn[standard]"
+    "uvicorn"
 ]
 keywords = ["fastapi", "web", "api"] 
 classifiers = [
@@ -18,6 +18,16 @@ classifiers = [
   "Framework :: FastAPI",
   "License :: OSI Approved :: MIT License",
 ]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "uvicorn[standard]",
+    "black",
+    "ruff"
+]
+
 
 [build-system]
 requires = ["setuptools", "wheel"] 

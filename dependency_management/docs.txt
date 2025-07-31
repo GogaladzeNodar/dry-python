@@ -14,6 +14,8 @@ WHAT CAN BE DONE WITH UV
 
         6. uv pip sync - installs version vrom uv.lock reproduciable environment
 
+        7. uv pip list --upgradable - this command determines which packages are updatable
+
 ------------------------------------------------------------------------
 
 ---WHY IS THIS GOOD?
@@ -39,4 +41,13 @@ WHAT CAN BE DONE WITH UV
         3. create requirements.txt where every dependencies is defined 
         uv pip compile requirements.in > requirements.txt
 
+-------------------------------------------------------------------------
 
+---DIVIDE PROD_DEPENDENCIES AND DEVELOPMENT DEPENDENCIES---
+    1. define main dependencies in [project]>dependencies 
+    and other in [project.optional-dependencies]> dev 
+
+    2. uv pip compile pyproject.toml > requirements.txt - this creates main dependencies
+    and when we need all of them for development 
+    uv pip compile pyproject.toml --extra dev > requirements-dev.txt
+    (this file is for development)
