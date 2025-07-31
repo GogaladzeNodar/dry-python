@@ -1,0 +1,42 @@
+[project]
+name = "MY_FIRST_ONE"
+version = "0.1.0"
+description = "My first Python project using pyproject.toml and uv"
+authors = [{ name = "Noda", email = "Noda@gmail.com"}]
+requires-python = ">=3.8"
+dependencies = [
+    "redis",
+    "pymysql",            
+    "psycopg2-binary",        
+    "pymongo",                
+    "fastapi",
+    "uvicorn[standard]"
+]
+keywords = ["fastapi", "web", "api"] 
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Framework :: FastAPI",
+  "License :: OSI Approved :: MIT License",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"] 
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+target-version = ['py310'] 
+
+
+[tool.ruff]
+select = ["E", "F"]      # e means - PEP8 error and F - undeclarared variables
+line-lenght = 88
+
+[tool.pytest.ini_options]  #   this is pytest parameters 
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
+
+
+
+
