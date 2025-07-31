@@ -1,27 +1,42 @@
 WHAT CAN BE DONE WITH UV
 
-1. install packages   #  uv pip install django
-   uv pip install django --project   # this will save in project.toml file
+        1. install packages   #  uv pip install django
+        uv pip install django --project   # this will save in project.toml file
+
+        2. uv pip compile --group default - generates lock files  
+        after that we don't need requirements.in and requirements.txt files
+
+        3. uv pip install - Installs dependencies listed in [project.dependencies]
+
+        4. uv pip add [packagge]  - this Adds a new package to pyproject.toml and installs it
+
+        5. uv pip update - this updates all dependencies
+
+        6. uv pip sync - installs version vrom uv.lock reproduciable environment
+
+------------------------------------------------------------------------
+
+---WHY IS THIS GOOD?
+        1. no need of requirements.txt and requirements.in file (but i realised you need!!!, it's better to use)
+
+        2. environment is reproduciable with uv.lock
+
+        3. as i see operations like add, remove update is easyer
 
 
-2. uv pip compile --group default - generates lock files  
- 
- after that we don't need requirements.in and requirements.txt files
+
+------------------------------------------------------------------------
+---BEST PRACTICE---
+
+        Best practice: Use a requirements.in file 
+        where you specify the main dependencies,
+        then use uv pip compile to generate a requirements.txt file.
+------------------------------------------------------------------------
+
+---CHAIN OF STRUCTURE---
+        1. main dependencies is defined in pyproject.toml> dependencies.
+        2. in requirements.in file make pointer of pyproject.toml> dependencies # -e .
+        3. create requirements.txt where every dependencies is defined 
+        uv pip compile requirements.in > requirements.txt
 
 
-3. uv pip install - Installs dependencies listed in [project.dependencies]
-
-
-4. uv pip add [packagge]  - this Adds a new package to pyproject.toml and installs it
-
-5. uv pip update - this updates all dependencies
-
-
-6. uv pip sync - installs version vrom uv.lock reproduciable environment
-
-
-
-WHY IS THIS GOOD?
-1. no need of requirements.txt and requirements.in file
-2. environment is reproduciable with uv.lock
-3. as i see operations like add, remove update is easyer
