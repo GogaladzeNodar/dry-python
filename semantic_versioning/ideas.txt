@@ -12,3 +12,6 @@ or dict like {major:1, minor:2, patch:0, prerelease: beta, prerelease version: 1
 
 3. logic to make comparison 
     
+
+* one exampe in tests is '1.0.1b' - this is not standart one so we must catch errors like this.
+(maybe it will be better to define vlidators or this error can be catched when we try to cast into integer)
