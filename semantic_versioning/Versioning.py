@@ -12,13 +12,19 @@ class Versions:
 
     def parser(self, version: str):
 
-        parts = version.split("-", 1)  # split into version and pre-release
-        base_version = parts[0]
-        pre_release = parts[1] if len(parts) > 1 else None
+        if "-" in version:
+            base_version, pre_release_part = version.split("-", 1)
+            pre_release = [
+                s for s in pre_release_part.split(".")
+            ]  # this divides prerelease part
+        else:
+            base_version = version
+            pre_release = []
 
-        major, minor, patch = map(
-            int, base_version.split(".")
-        )  # map is lazy, so it won't evaluate until needed
+        base_version_parts = base_version.split(".")
+        major = int(base_version_parts[0])
+        minor = int(base_version_parts[1])
+        patch = int(base_version_parts[2])
 
         return major, minor, patch, pre_release
 
@@ -41,4 +47,33 @@ class Versions:
             return self.minor < other.minor
         if self.patch != other.patch:
             return self.patch < other.patch
-        return (self.pre_release or "") < (other.pre_release or "")
+
+        # here we compare pre-release versions
+
+        if self.pre_release and not other.pre_release:
+            return True
+        if not self.pre_release and other.pre_release:
+            return False
+
+        # now if both of them have prerelease, we must compare pre_release list
+
+        if self.pre_release and other.pre_release:
+            # compare each part of pre_release
+            for self_part, other_part in zip(self.pre_release, other.pre_release):
+                is_self_num = self_part.isdigit()
+                is_other_num = other_part.isdigit()
+
+                if is_self_num and is_other_num:
+                    if int(self_part) != int(other_part):
+                        return int(self_part) < int(other_part)
+                elif is_self_num and not is_other_num:
+                    return False
+                elif not is_self_num and is_other_num:
+                    return True
+                else:  # both are strings
+                    if self_part != other_part:
+                        return self_part < other_part
+
+            return len(self.pre_release) < len(other.pre_release)
+
+        return False

@@ -15,3 +15,16 @@ or dict like {major:1, minor:2, patch:0, prerelease: beta, prerelease version: 1
 
 * one exampe in tests is '1.0.1b' - this is not standart one so we must catch errors like this.
 (maybe it will be better to define vlidators or this error can be catched when we try to cast into integer)
+
+
+
+
+----------------------------------------------------
+HOW PURSER MUST WORK?
+    1. compare the value with the general pattern of the version # 
+    2. let's divide it into two parts, the main part and the release part according to "-".
+         if '-' is not there, let's say this is without release version
+
+    3. add prerelease comparsion in dunder methods 
+
+    maybe where wil be some exceptions also
