@@ -1,0 +1,14 @@
+WHAT IS BASIC PARTS OF STRUCTURE?
+
+1. - we need parser, to parse this data  1.2.0-alpha.1  or having a similar structure like this - 
+[1, 2, 0, alpha, 1]   # which data structure is better for this data? i must serch this
+or dict like {major:1, minor:2, patch:0, prerelease: beta, prerelease version: 1}
+
+    1.1 - It might be better to divide it into two parts first, main and pre release
+    but why? let,s think about it. 
+    (maybe we can define two different equivaliation logic, firs part is numbers second one have leeters too)
+
+2. - we must implement methods like __lt__, __gt__, __eq__ and so on.
+
+3. logic to make comparison 
+    
