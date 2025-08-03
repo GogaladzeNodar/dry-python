@@ -1,4 +1,5 @@
 import functools
+from validators import is_valid_version
 
 
 @functools.total_ordering
@@ -11,6 +12,9 @@ class Versions:
         self.major, self.minor, self.patch, self.pre_release = self.parser(version)
 
     def parser(self, version: str):
+
+        if not is_valid_version(version):
+            raise ValueError(f"Invalid semantic version string: '{version}'")
 
         if "-" in version:
             base_version, pre_release_part = version.split("-", 1)
