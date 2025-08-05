@@ -136,6 +136,8 @@ def delete_item():
     print("Item deleted.")
 """
 
+user = {"username": "noda", "permissions": ["read", "write"]}
+
 
 def require_permission(permission_name):
     def decorator(func):
@@ -149,3 +151,17 @@ def require_permission(permission_name):
         return wrapper
 
     return decorator
+
+
+@require_permission("delete")
+def delete_item(user):
+    print("Item deleted.")
+
+
+@require_permission("write")
+def write_item(user):
+    print("Item written.")
+
+
+delete_item(user)
+write_item(user)
