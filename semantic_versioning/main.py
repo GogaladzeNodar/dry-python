@@ -1,11 +1,23 @@
 from Versioning import Versions
 
 
-if __name__ == "__main__":
+def main():
+    try:
 
-    print(Versions("1.0.0") < Versions("1.0.1"))  # True
-    print(Versions("1.0.1-alpha") < Versions("1.0.1"))  # True
-    print(Versions("1.0.1-beta") < Versions("1.0.1-alpha"))  # False
-    print(Versions("1.0.1-alpha") == Versions("1.0.1-alpha"))  # True
-    print(Versions("1.0.1-alpha.beta") < Versions("1.0.1-beta.1"))  # True
-    print(Versions("1.0.1-beta.2") < Versions("1.0.1-beta.1"))  # False
+        version1 = Versions("1.0.0-ab+build.1")
+        version2 = Versions("1.0.0+build.2")
+        version3 = Versions("1.2.3")
+
+        print(f"Is {version1} less than {version2}? {version1 < version2}")
+        print(f"Are {version1} and {version2} equal? {version1 == version2}")
+        print(f"Is {version3} greater than {version2}? {version3 > version2}")
+        # <Versioning.Versions object at 0x10318f7d0>  - override __str__ method to print version nicely
+
+        print("\nTesting an invalid version:")
+        Versions("1.2")
+    except ValueError as e:
+        print(f"Caught expected error: {e}")
+
+
+if __name__ == "__main__":
+    main()

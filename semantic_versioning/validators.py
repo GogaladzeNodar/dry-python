@@ -9,7 +9,7 @@ def is_something_like_semantic_version(version):
     pattern = r"^.+?\..+?\..*"
     if re.match(pattern, version):
         return version  # if true, at last we have two dots to split major, minor and pactch or patch and pre-release
-    return ValueError("Invalid semantic version string: '{}'".format(version))
+    raise ValueError("Invalid semantic version string: '{}'".format(version))
 
 
 def normalize_dots(version):

@@ -10,7 +10,9 @@ class Versions:
     """
 
     def __init__(self, version: str):
-        self.major, self.minor, self.patch, self.pre_release = self.parser(version)
+        self.major, self.minor, self.patch, self.pre_release, self.build = self.parser(
+            version
+        )
 
     @staticmethod
     def parser(version: str):
@@ -30,7 +32,7 @@ class Versions:
         else:
             pre_release = ()
 
-        return major, minor, patch, pre_release
+        return major, minor, patch, pre_release, build
 
     def __eq__(self, other):
         if not isinstance(other, Versions):
@@ -40,6 +42,7 @@ class Versions:
             and self.minor == other.minor
             and self.patch == other.patch
             and self.pre_release == other.pre_release
+            and self.build == other.build
         )
 
     def __lt__(self, other):
@@ -71,9 +74,9 @@ class Versions:
                     if int(self_part) != int(other_part):
                         return int(self_part) < int(other_part)
                 elif is_self_num and not is_other_num:
-                    return False
-                elif not is_self_num and is_other_num:
                     return True
+                elif not is_self_num and is_other_num:
+                    return False
                 else:  # both are strings
                     if self_part != other_part:
                         return self_part < other_part
@@ -81,3 +84,13 @@ class Versions:
             return len(self.pre_release) < len(other.pre_release)
 
         return False
+
+    def __str__(self):
+        version_str = f"{self.major}.{self.minor}.{self.patch}"
+        if self.pre_release:
+            pre_release_str = ".".join(self.pre_release)
+            version_str += f"-{pre_release_str}"
+        if self.build:
+            version_str += f"+{self.build}"
+
+        return version_str

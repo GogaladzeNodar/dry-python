@@ -33,7 +33,7 @@ def extract_leading_digits(value):
     """
     Extracts the leading digits from a patch_and_pre_release string.
     Returns the leading digits as an integer and last part as string.
-    If leading digits are not found, returns valuerror
+    If leading digits are not found, returns value error
     """
     match = re.match(r"(\d+)(.*)", value)
     if match:
@@ -42,7 +42,7 @@ def extract_leading_digits(value):
         if remainder.startswith("-"):
             remainder = remainder[1:]
         return digits, remainder
-    raise ValueError(f"pattch is not found")
+    raise ValueError(f"patch is not found")
 
 
 def split_by_value(value, character):
