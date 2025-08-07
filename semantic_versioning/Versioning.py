@@ -1,5 +1,6 @@
 import functools
-from validators import is_valid_version
+from validators import *
+from patch_and_pre_release import parse_patch_and_pre_release
 
 
 @functools.total_ordering
@@ -11,24 +12,23 @@ class Versions:
     def __init__(self, version: str):
         self.major, self.minor, self.patch, self.pre_release = self.parser(version)
 
-    def parser(self, version: str):
+    @staticmethod
+    def parser(version: str):
+        version = is_something_like_semantic_version(version)
+        major, minor, patch_and_pre_release = split_on_dots(
+            version, count=2, as_tuple=True
+        )
 
-        if not is_valid_version(version):
-            raise ValueError(f"Invalid semantic version string: '{version}'")
+        major = extract_int_from_string(major)
+        minor = extract_int_from_string(minor)
+        # at that moment we have major(int), minor(int) and patch_and_pre_release(string)
+        # if arg is similar to semantic version and don't throw an error,
+        patch, pre_release, build = parse_patch_and_pre_release(patch_and_pre_release)
 
-        if "-" in version:
-            base_version, pre_release_part = version.split("-", 1)
-            pre_release = [
-                s for s in pre_release_part.split(".")
-            ]  # this divides prerelease part
+        if pre_release:
+            pre_release = split_on_dots(pre_release, delimiter=".", as_tuple=True)
         else:
-            base_version = version
-            pre_release = []
-
-        base_version_parts = base_version.split(".")
-        major = int(base_version_parts[0])
-        minor = int(base_version_parts[1])
-        patch = int(base_version_parts[2])
+            pre_release = ()
 
         return major, minor, patch, pre_release
 
